@@ -221,7 +221,7 @@ app.layout = html.Div(children=[
                 {'x': [x_speed()], 'y': [y_speed()], 'type': 'bar', 'name': 'Speed Rating'},
             ],
             'layout': {
-                'title': 'Aurous79® Bar/Restuarant Feedback'
+                'title': 'Aurous79® Customer Rating'
             },
         },
 
