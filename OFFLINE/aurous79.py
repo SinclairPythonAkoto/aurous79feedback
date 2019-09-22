@@ -1,5 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect, flash, session
 from functools import wraps
+from db_table import * # db_table is a python file of my database tables
+from graph_func import * # import all functions for the dash graph
 from flask_mail import Mail, Message
 import dash
 import dash_core_components as dcc
@@ -34,49 +36,6 @@ def login_required(f):
 			return redirect(url_for('login'))
 	return wrap
 
-from sqlalchemy.orm import sessionmaker, relationship
-
-# # this part is needed to create session to query database.  this should be JUST BELOW app.config..
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey, select
-meta = MetaData()
-engine = create_engine("postgresql://postgres:161086@localhost/test-db-02", echo = True)
-from sqlalchemy.ext.declarative import declarative_base
-Base = declarative_base()
-
-# database here
-class AurousFeedback(Base):
-    __tablename__ = 'aurous_feedback'
-    id = Column('id', Integer, primary_key=True)
-    name = Column('name', String(20))
-    age = Column('age', Integer)
-    sex = Column('sex', String(6))
-    f_visit = Column('first_visit', String(3))
-    comeback = Column('return_visit', String(3))
-    clean = Column('cleanliness', Integer)
-    service = Column('customer_service', Integer)
-    speed = Column('speed', Integer)
-    shisha = Column('shisha', String(3))
-    comment =  Column('comment', String(480))
-    email = Column('email', String(40))
-    confirm = Column('confirm_email', String(40))
-    timeStamp = Column('time_stamp', String(5))
-    dateStamp = Column('date_stamp', String())
-    
-    def __init__(self, name, age, sex, f_visit, comeback, clean, service, speed, shisha, comment, email, confirm, timeStamp, datetime):
-        self.name = name
-        self.age = age
-        self.sex = sex
-        self.f_visit = f_visit
-        self.comeback = comeback
-        self.clean = clean
-        self.service = service
-        self.speed = speed
-        self.shisha = shisha
-        self.comment = comment
-        self.email = email
-        self.confirm = confirm
-        self.timeStamp = timeStamp
-        self.datetime = datetime
 
 Session = sessionmaker(bind=engine)
 db_session = Session()
@@ -108,7 +67,7 @@ def feedback():
 		email = request.form.get("email")
 		confirm = request.form.get("confirmEmail")
 		time = str(datetime.now().time())
-		tdate = datetime.now().date()
+		tdate = str(datetime.now().today())
 		if email == confirm:
 			db_entry = AurousFeedback(name, age, sex, visit, return_v, appearance, customer, serviceSpeed, shisha, comment, email, confirm, time, tdate)
 			db_session.add(db_entry)
@@ -117,15 +76,15 @@ def feedback():
 			msg = Message('My Aurous® Discount!', recipients=[email])
 			msg.body = f'Thank you {name} for completing our feedback form! You have earned 5"%" off from your bill.\n\nTo gain your discount please show this email to the cashier.\n\nPlease note that this expires 24hrs after {tdate} {time}.\n\n\n'
 
-			with app.open_resource('aurouslogo.jpg') as logo:
+			with server.open_resource('aurouslogo.jpg') as logo:
 				msg.attach('aurouslogo.jpg', 'image/jpeg', logo.read())
 
-
+			mail.send(msg)
 
 			flash(f'Thank you {name} for your feedback!')
 			return redirect(url_for('home'))
 		else:
-			error = "Please provide a correct email to send the discount to!"
+			error = "Please provide a correct email to recieve your discount!"
 			return render_template('feedback.html', title=title, error=error)
 
 @server.route('/login', methods=['GET', 'POST'])
@@ -204,6 +163,68 @@ def report():
 				flash('You need to select a reprot to run!')
 				return redirect(url_for('report'))
 
+# creating your graphs
+app = dash.Dash(
+    __name__,
+    server=server,
+    routes_pathname_prefix='/dash/'
+)
+
+app.layout = html.Div(children=[
+    html.H1(children='Aurous79 Customer Analysis'),
+
+    html.Div(children='''
+        Aurous79 Customer Analysis
+    '''),
+
+    dcc.Graph(
+        id='aurous-graph1',
+        figure={
+            'data': [
+            	{'x': [x_men()], 'y': [y_men()], 'type': 'bar', 'name': 'Males'},
+                {'x': [x_women()], 'y': [y_women()], 'type': 'bar', 'name': 'Females'},
+            ],
+            'layout': {
+                'title': 'Aurous79® Visitors by Gender'
+            },
+        },
+
+    ),
+    html.Div('''
+    	This graph displays the contast bewteen male & female customers who complete the Aurous79 feedback form.
+    '''),
+    dcc.Graph(
+        id='aurous-graph2',
+        figure={
+            'data': [
+            	{'x': [x_visitors()], 'y': [y_visitors()], 'type': 'bar', 'name': 'New Visitors'},
+            	{'x': [x_comeback()], 'y': [y_comeback()], 'type': 'bar', 'name': 'Customer Service'},
+            	{'x': [x_shisha()], 'y': [y_shisha()], 'type': 'bar', 'name': 'Tried Shisha'},
+            ],
+            'layout': {
+                'title': 'Aurous79® Customer Relations'
+            },
+        },
+
+    ),
+    html.Div('''
+    	This graph displays the average ranking of Cleanliness, Customer Service and Speed by customers.  The amount of customers are displayed on the X axis below.
+    '''),
+    dcc.Graph(
+        id='aurous-graph3',
+        figure={
+            'data': [
+            	{'x': [x_clean()], 'y': [y_clean()], 'type': 'bar', 'name': 'Cleanliness Rating'},
+            	{'x': [x_service()], 'y': [y_service()], 'type': 'bar', 'name': 'Customer Service Rating'},
+            	{'x': [x_speed()], 'y': [y_speed()], 'type': 'bar', 'name': 'Speed Rating'},
+            ],
+            'layout': {
+                'title': 'Aurous79® Bar/Restuarant Feedback'
+            },
+        },
+
+    ),
+])
 
 
 if __name__ == '__main__':
