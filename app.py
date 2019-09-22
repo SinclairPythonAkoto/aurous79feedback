@@ -199,9 +199,9 @@ app.layout = html.Div(children=[
         id='aurous-graph2',
         figure={
             'data': [
-                {'x': [x_visitors()], 'y': [y_visitors()], 'type': 'bar', 'name': 'New Visitors'},
-                {'x': [x_comeback()], 'y': [y_comeback()], 'type': 'bar', 'name': 'Customer Service'},
-                {'x': [x_shisha()], 'y': [y_shisha()], 'type': 'bar', 'name': 'Tried Shisha'},
+                {'x': [1], 'y': [y_visitors()], 'type': 'bar', 'name': 'New Visitors'},
+                {'x': [2], 'y': [y_comeback()], 'type': 'bar', 'name': 'Customer Service'},
+                {'x': [3], 'y': [y_shisha()], 'type': 'bar', 'name': 'Tried Shisha'},
             ],
             'layout': {
                 'title': 'Aurous79® Customer Relations'
@@ -221,7 +221,7 @@ app.layout = html.Div(children=[
                 {'x': [x_speed()], 'y': [y_speed()], 'type': 'bar', 'name': 'Speed Rating'},
             ],
             'layout': {
-                'title': 'Aurous79® Customer Rating'
+                'title': 'Overall Aurous79® Customer Rating'
             },
         },
 
