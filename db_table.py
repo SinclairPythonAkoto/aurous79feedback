@@ -1,3 +1,5 @@
+import os
+
 from sqlalchemy.orm import sessionmaker, relationship
 
 # # this part is needed to create session to query database.  this should be JUST BELOW app.config..

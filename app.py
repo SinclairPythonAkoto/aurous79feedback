@@ -2,8 +2,8 @@ import os
 
 from flask import Flask, render_template, url_for, request, redirect, flash, session
 from functools import wraps
-from db_table import * # db_table is a python file of my database tables
-from graph_func import * # import all functions for the dash graph
+from db_table import * 
+from graph_func import * 
 from flask_mail import Mail, Message
 import dash
 import dash_core_components as dcc
