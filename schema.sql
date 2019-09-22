@@ -1,7 +1,16 @@
-DROP TABLE if exists dash_graphs;
-CREATE TABLE dash_graphs (
+DROP TABLE if exists aurous_feedback;
+CREATE TABLE aurous_feedback (
   id SERIAL PRIMARY KEY,
   name VARCHAR,
+  age INTEGER,
+  sex VARCHAR,
   first_visit VARCHAR,
-  visit_again VARCHAR
+  return_visit VARCHAR,
+  cleanliness INTEGER,
+  customer_service INTEGER,
+  speed INTEGER,
+  shisha VARCHAR,
+  comment VARCHAR,
+  email VARCHAR,
+  date_stamp = VARCHAR NOT NULL
   );
