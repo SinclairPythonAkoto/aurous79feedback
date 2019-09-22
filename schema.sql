@@ -12,5 +12,5 @@ CREATE TABLE aurous_feedback (
   shisha VARCHAR,
   comment VARCHAR,
   email VARCHAR,
-  date_stamp = VARCHAR NOT NULL
+  date_stamp VARCHAR NOT NULL
   );
