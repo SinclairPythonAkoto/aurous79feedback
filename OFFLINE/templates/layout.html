@@ -6,6 +6,34 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 
+body {
+  background-color: black;
+}
+
+h1, h2 {
+  padding: 20px;
+  color: #f9d709;
+}
+
+hr {
+  color: #f9d709;
+}
+
+p, h5, h6, label, a {
+  color: white;
+}
+
+.content {
+  padding: 20px;
+  width: 77%;
+  /*background-color: #fdf1aa;*/
+  background-color: white;
+}
+
+.content > p {
+  color: black;
+}
+
 table {
   border: 2px solid black;
   border-collapse: collapse;
@@ -18,7 +46,7 @@ th, td {
   text-align: center;
 }
 
-th {
+th, td {
   background-color: lightgray;
 }
 
@@ -43,7 +71,7 @@ body {
 }
 
 .topnav a:hover {
-  background-color: #ddd;
+  background-color: #fbe351;
   color: black;
 }
 
@@ -83,6 +111,9 @@ body {
 
 <div class="topnav" id="myTopnav">
   <a href="#" class="active">Aurous79</a>
+  <a href="{{ url_for('home') }}">Feedback Home</a>
+  <a href="{{ url_for('feedback') }}">Feedback</a>
+  <a href="{{ url_for('admin') }}">Aurous Admin</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
   </a>
@@ -98,7 +129,7 @@ body {
 
 <!-- flash messages -->
 {% for messages in get_flashed_messages() %}
-  {{ messages }}
+  <p>{{ messages }}</p>
 {% endfor %}
 
 <script>
