@@ -7,6 +7,11 @@ engine = create_engine("postgresql://postgres:161086@localhost/test-db-02", echo
 from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
+from datetime import datetime
+# this is added to create a date stamp for SQL
+# done in such a way that the data is stored in a String format
+# instead of using Date data-type
+
 # database here
 class AurousFeedback(Base):
     __tablename__ = 'aurous_feedback'
@@ -24,7 +29,7 @@ class AurousFeedback(Base):
     email = Column('email', String(40))
     confirm = Column('confirm_email', String(40))
     timeStamp = Column('time_stamp', String(5))
-    dateStamp = Column('date_stamp', String())
+    dateStamp = Column('date_stamp', String(), nullable=False, default = datetime.now().today())
     
     def __init__(self, name, age, sex, f_visit, comeback, clean, service, speed, shisha, comment, email, confirm, timeStamp, datetime):
         self.name = name

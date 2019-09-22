@@ -34,8 +34,7 @@
 		<th>SHISHA</th>
 		<th>COMMENTS</th>
 		<th>EMAIL</th>
-		<th>DATE STAMP</th>
-		<th>TIME STAMP</th>
+		<th>DATE & TIME</th>
 	</tr>
 	{% for d in data %}
 	<tr>
@@ -52,7 +51,6 @@
 		<td>{{ d.comment }}</td>
 		<td>{{ d.email }}</td>
 		<td>{{ d.dateStamp }}</td>
-		<td>{{ d.timeStamp }}</td>
 	</tr>
 	{% endfor %}
 </table>

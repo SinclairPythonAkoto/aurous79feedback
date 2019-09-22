@@ -67,14 +67,14 @@ def feedback():
 		email = request.form.get("email")
 		confirm = request.form.get("confirmEmail")
 		time = str(datetime.now().time())
-		tdate = str(datetime.now().today())
+		tdate = str(datetime.now().date())
 		if email == confirm:
 			db_entry = AurousFeedback(name, age, sex, visit, return_v, appearance, customer, serviceSpeed, shisha, comment, email, confirm, time, tdate)
 			db_session.add(db_entry)
 			db_session.commit()
 
 			msg = Message('My Aurous® Discount!', recipients=[email])
-			msg.body = f'Thank you {name} for completing our feedback form! You have earned 5"%" off from your bill.\n\nTo gain your discount please show this email to the cashier.\n\nPlease note that this expires 24hrs after {tdate} {time}.\n\n\n'
+			msg.body = f'Thank you {name} for completing our feedback form! You have earned 5"%" off from your bill.\n\nTo gain your discount please show this email to the cashier.\n\nPlease note that this expires 24hrs after {tdate}, {time}.\n\n\n'
 
 			with server.open_resource('aurouslogo.jpg') as logo:
 				msg.attach('aurouslogo.jpg', 'image/jpeg', logo.read())

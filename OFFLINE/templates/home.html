@@ -29,15 +29,13 @@
 			<th>ID</th>
 			<th>NAME</th>
 			<th>GUEST COMMENTS</th>
-			<th>TIME STAMP</th>
-			<th>DATE</th>
+			<th>DATE & TIME</th>
 		</tr>
 		{% for d in data %}
 		<tr>
 			<th>{{ d.id }}</th>
 			<td>{{ d.name }}</td>
 			<td>{{ d.comment }}</td>
-			<td>{{ d.timeStamp }}</td>
 			<td>{{ d.dateStamp }}</td>
 		</tr>
 		{% endfor %}
