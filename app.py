@@ -183,8 +183,8 @@ app.layout = html.Div(children=[
         id='aurous-graph1',
         figure={
             'data': [
-                {'x': [x_men()], 'y': [y_men()], 'type': 'bar', 'name': 'Males'},
-                {'x': [x_women()], 'y': [y_women()], 'type': 'bar', 'name': 'Females'},
+                {'x': [1], 'y': [y_men()], 'type': 'bar', 'name': 'Males'},
+                {'x': [2], 'y': [y_women()], 'type': 'bar', 'name': 'Females'},
             ],
             'layout': {
                 'title': 'Aurous79® Visitors by Gender'
