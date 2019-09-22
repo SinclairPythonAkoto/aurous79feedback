@@ -210,7 +210,7 @@ app.layout = html.Div(children=[
 
     ),
     html.Div('''
-        This graph displays the average ranking of Cleanliness, Customer Service and Speed by customers.  The amount of customers are displayed on the X axis below.
+        This graph displays the number of customers that were first time customers, customers that would return and customers that tried the shisha.
     '''),
     dcc.Graph(
         id='aurous-graph3',
@@ -226,6 +226,9 @@ app.layout = html.Div(children=[
         },
 
     ),
+    html.Div('''
+        This graph displays the average ranking (out of 5) for Cleanliness, Customer Service and Speed by customers.  The total amount of customers are displayed on the X axis below.
+    '''),
 ])
 
 

@@ -181,8 +181,8 @@ app.layout = html.Div(children=[
         id='aurous-graph1',
         figure={
             'data': [
-            	{'x': [x_men()], 'y': [y_men()], 'type': 'bar', 'name': 'Males'},
-                {'x': [x_women()], 'y': [y_women()], 'type': 'bar', 'name': 'Females'},
+            	{'x': [1], 'y': [y_men()], 'type': 'bar', 'name': 'Males'},
+                {'x': [2], 'y': [y_women()], 'type': 'bar', 'name': 'Females'},
             ],
             'layout': {
                 'title': 'Aurous79® Visitors by Gender'
@@ -197,9 +197,9 @@ app.layout = html.Div(children=[
         id='aurous-graph2',
         figure={
             'data': [
-            	{'x': [x_visitors()], 'y': [y_visitors()], 'type': 'bar', 'name': 'New Visitors'},
-            	{'x': [x_comeback()], 'y': [y_comeback()], 'type': 'bar', 'name': 'Customer Service'},
-            	{'x': [x_shisha()], 'y': [y_shisha()], 'type': 'bar', 'name': 'Tried Shisha'},
+            	{'x': [1], 'y': [y_visitors()], 'type': 'bar', 'name': 'New Visitors'},
+            	{'x': [2], 'y': [y_comeback()], 'type': 'bar', 'name': 'Customer Service'},
+            	{'x': [3], 'y': [y_shisha()], 'type': 'bar', 'name': 'Tried Shisha'},
             ],
             'layout': {
                 'title': 'Aurous79® Customer Relations'
@@ -208,7 +208,7 @@ app.layout = html.Div(children=[
 
     ),
     html.Div('''
-    	This graph displays the average ranking of Cleanliness, Customer Service and Speed by customers.  The amount of customers are displayed on the X axis below.
+    	This graph displays the number of customers that were first time customers, customers that would return and customers that tried the shisha.
     '''),
     dcc.Graph(
         id='aurous-graph3',
@@ -219,12 +219,19 @@ app.layout = html.Div(children=[
             	{'x': [x_speed()], 'y': [y_speed()], 'type': 'bar', 'name': 'Speed Rating'},
             ],
             'layout': {
-                'title': 'Aurous79® Bar/Restuarant Feedback'
+                'title': 'Overall Aurous79® Customer Rating'
             },
         },
 
     ),
+    html.Div('''
+    	This graph displays the average ranking (out of 5) for Cleanliness, Customer Service and Speed by customers.  The total amount of customers are displayed on the X axis below.
+    '''),
 ])
+
+@server.route('/test')
+def test():
+	return f"{x_clean()}"
 
 
 if __name__ == '__main__':
