@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+<title>
+	{{ title }}
+	<meta name="description" content="Aurous79 guestbook for visitors to sign.">
+	<meta name="author" content="SinclaiPythonAkoto">
+</title>
+
+
+{% block content %}
+
+<style>
+	.content {
+	  padding: 20px;
+	  width: 50%;
+	  /*background-color: #fdf1aa;*/
+	  background-color: white;
+	}
+</style>
+
+
+<h1>{{  title }} Aurous Guestbook</h1>
+<p>Sign the guesbook below and leave a comment or review!</p>
+
+<div class="content">
+	<form action="{{ url_for('guestbook') }}" method="post">
+		<div>
+			Name: <input type="text" name="name" placeholder="Your Name" required><br><br>
+			<label for="guestBook">Sign the guestbook below!</label><br>
+			<textarea cols="60%" rows="10%" name="guestbook" placeholder="Leave your comment / review !" required></textarea><br>
+			<button type="submit">SIGN GUESTBOOK!</button>
+		</div>
+		<div>
+			
+		</div>
+	</form>
+</div>
+
+{% endblock %}

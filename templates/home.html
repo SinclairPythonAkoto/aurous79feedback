@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+<title>
+	{{ title }}
+	<meta name="description" content="Aurous79 Feedback homepage">
+	<meta name="author" content="SinclairPythonAkoto">
+	
+</title>
+
+{% block content%}
+<div class="background">
+	<h1>{{ title }} Feedback !</h1>
+	<br>
+	<div>
+		<p>Welcome to Aurous 79®</p><br>
+		<p>How was your experience at Aurous79 today? You can complete our <strong><a href="{{ url_for('feedback') }}">feedback</a></strong> form to recieve a discount off from yiour next bill!</p>
+	</div>
+	<br>
+	<div class="">
+		<p>Click here to fill in the <a href="{{ url_for('feedback') }}">Feedback Form.</a></p>
+		<br>
+		<p>Click here to login as <a href="{{ url_for('admin') }}">Management.</a></p>
+	</div>
+	<hr>
+</div>
+<div>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>NAME</th>
+			<th>GUEST COMMENTS</th>
+			<th>DATE & TIME</th>
+		</tr>
+		{% for d in data %}
+		<tr>
+			<th>{{ d.id }}</th>
+			<td>{{ d.name }}</td>
+			<td>{{ d.comment }}</td>
+			<td>{{ d.dateStamp }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+
+{% endblock %}
