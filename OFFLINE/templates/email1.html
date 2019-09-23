@@ -1,0 +1,29 @@
+{% extends "adminlayout.html" %}
+
+<title>
+	{% block title %}
+	{{ title }}
+	<meta name="description" content="Send an email to just one recipient from Aurous79.  You need to be logged in as management to be able to access this feature.">
+	<meta name="author" content="SinclairPythonAkoto">
+	{% endblock %}
+</title>
+
+{% block content %}
+
+<h1>{{ title }} Single Email</h1>
+
+<form action="{{ url_for('email1') }}" method="post">
+	<div class="card">
+		<img src="static/aurous-logo.png" alt="Aurous79Logo" style="width: 100%">
+		<label for="intro">Send an email to one of your clients or customers!</label><br><br>
+		<label for="recipient">Recipient Email</label>
+		<input id="recipient" type="text" name="name" placeholder="Enter email..." required>
+		<label for="emailSubject">Subject</label>
+		<input id="emailSubject" type="text" name="sub" placeholder="Email subject..." required>
+		<label for="emailContent">Message</label>
+		<textarea id="emailContent" name="email_content" rows="10" cols="35" placeholder="Enter your email here..." required></textarea>
+		<button>SEND EMAIL</button>
+	</div>
+</form>
+
+{% endblock %}

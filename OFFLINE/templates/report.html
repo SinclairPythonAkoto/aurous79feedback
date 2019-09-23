@@ -1,16 +1,18 @@
-{% extends "layout.html" %}
+{% extends "adminlayout.html" %}
 
 <title>
+	{% block title %}
 	{{ title }}
 	<meta name="description" content="Aurous79 Admin Report page.  Management can login to run reports on their customer base.">
 	<meta name="author" content="SinclairPythonAkoto">
+	{% endblock %}
 </title>
 
 {% block content %}
 
 <h1>{{ title }}</h1>
 
-<form action="" method="post">
+<form action="{{ url_for('report') }}" method="post">
 	<div>
 		<table>
 			<tr>
@@ -251,13 +253,6 @@
 	<br>
 	<br>
 	<a href="/dash/">Graph Analysis</a>
-	<div>
-		<footer>
-			<a href="{{ url_for('admin') }}">Back</a><br>
-			<br>
-			<a href="{{ url_for('logout') }}">Logout</a>
-		</footer>
-	</div>
 </form>
 
 {% endblock %}

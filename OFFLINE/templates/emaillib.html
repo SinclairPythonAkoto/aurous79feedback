@@ -1,0 +1,50 @@
+{% extends 'adminlayout.html' %}
+
+<title>
+	{% block title %}
+	{{ title }} Email Library
+	<meta name="description" content="Management can upload email addresses into the Aurous Email Library in order to send mass emails to.  Entries from the Aurous Email Library will be sourced from outside the feedback form.  With this, the management of Aurous79 can choose who they want to include in tehir mass mailing list.">
+	<meta name="author" content="SinclairPythonAkoto">
+	{% endblock %}
+</title>
+
+{% block content %}
+
+<div>
+	<h1>{{ title }} Email Library</h1>
+	<p>Welcome to Aurous79 Email Library.  This page is to enable the management of Aurous79 to update the email library in order to keep a record of contacts, as well as send promotional mass emails to.</p>
+</div>
+<hr>
+<form action="{{ url_for('emaillib') }}" method="post">
+	<div class="card">
+		<img src="static/aurous-logo.png" alt="Aurous79Logo" style="width: 100%">
+		<label for="intro">Enter the client/customer name & email to store into the library.</label><br><br>
+		<input type="text" name="name" placeholder="Insert name..." required>
+		<input type="text" name="email" placeholder="Insert email..." required="">
+		<button type="submit">SAVE TO LIBRARY!</button>
+	</div>
+	<br>
+	<br>
+	<hr>
+	<br>
+	<p>You can view the stored emails below:</p>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>NAME</th>
+			<th>EMAIL</th>
+		</tr>
+		{% for d in data %}
+		<tr>
+			<td>{{ d.id }}</td>
+			<td>{{ d.lib_name }}</td>
+			<td>{{ d.lib_mail }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</form>
+<br>
+<br>
+
+
+{% endblock %}

@@ -1,5 +1,13 @@
 {% extends "layout.html" %}
 
+<title>
+	{% block title %}
+	{{ title }}
+	<meta name="description" content="Aurous79 feedback form; complete the feedback form to get 5% off from your next bill!">
+	<meta name="author" content="SinclairPythonAkoto">
+	{% endblock %}
+</title>
+
 {% block content %}
 
 <style>
@@ -89,6 +97,7 @@ input[type=submit]:hover {
 
 <form action="{{ url_for('feedback') }}" method="post">
 	<div class="card">
+		<img src="static/aurous-logo.png" alt="Aurous79Logo" style="width: 100%">
 		<label for="userName">Input Name</label>
 		<input id="userName" type="text" name="name" placeholder="Your Name" required>
 		<label for="userAge">What's Your Age?</label>

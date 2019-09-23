@@ -46,3 +46,14 @@ class AurousFeedback(Base):
         self.confirm = confirm
         self.timeStamp = timeStamp
         self.datetime = datetime
+
+
+class EmailLibrary(Base):
+    __tablename__ = 'email_library'
+    id = Column('id', Integer, primary_key=True)
+    lib_name = Column('name', String(30))
+    lib_mail = Column('email', String(50))
+
+    def __init__(self, lib_name, lib_mail):
+        self.lib_name = lib_name
+        self.lib_mail = lib_mail
