@@ -42,7 +42,7 @@ def login_required(f):
 Session = sessionmaker(bind=engine)
 db_session = Session()
 
-title = "Aurous79"
+title = "Aurous79®"
 
 @server.route('/')
 def home():
@@ -71,12 +71,12 @@ def feedback():
         time = str(datetime.now().time())
         tdate = str(datetime.now().date())
         if email == confirm:
-            db_entry = AurousFeedback(name, age, sex, visit, return_v, appearance, customer, serviceSpeed, shisha, comment, email, confirm, time, tdate)
+            db_entry = AurousFeedback(name, age, sex, visit, return_v, appearance, customer, serviceSpeed, shisha, comment, email, tdate)
             db_session.add(db_entry)
             db_session.commit()
 
             msg = Message('My Aurous® Discount!', recipients=[email])
-            msg.body = f'Thank you {name} for completing our feedback form! You have earned 5"%" off from your bill.\n\nTo gain your discount please show this email to the cashier.\n\nPlease note that this expires 24hrs after {tdate}, {time}.\n\n\n'
+            msg.body = f'Thank you {name} for completing our feedback form! You have earned 5"%" off from your bill.\n\nTo gain your discount please show this email to the cashier.\n\nPlease note that this expires 24hrs after {time}, {tdate}.\n\n\n'
 
             with server.open_resource('aurouslogo.jpg') as logo:
                 msg.attach('aurouslogo.jpg', 'image/jpeg', logo.read())
@@ -91,7 +91,6 @@ def feedback():
 
 @server.route('/login', methods=['GET', 'POST'])
 def login():
-    title = "Aurous79 Login"
     error = None
     admin = request.form.get("username")
     admin_pw = request.form.get("password")
@@ -109,7 +108,6 @@ def login():
 @server.route('/admin', methods=['GET', 'POST'])
 @login_required
 def admin():
-    title = "Aurous79 Admin"
     data = db_session.query(AurousFeedback).all()
     return render_template('admin.html', title=title, data=data)
 
@@ -119,6 +117,91 @@ def logout():
     session.pop('logged_in', None)
     flash('See you soon!')
     return redirect(url_for('home'))
+
+@server.route('/aurousemail', methods=['GET', 'POST'])
+@login_required
+def aurousemail():
+    if request.method == 'GET':
+        return render_template('aurousemail.html', title=title)
+    else:
+        sub = request.form.get("sub")
+        content = request.form.get("email_content")
+        # if feedback list is picked...
+        if request.form.get("massEmail") == 'feedback_lib':
+        # else if email library picked...
+            db_emails = db_session.query(AurousFeedback.email).all()
+            emails = db_emails # this stores all emails in database
+            # emails is a list of tuples
+            sendEmail = []
+            for e in emails: sendEmail += e
+            # this is another way of writing a for-loop
+            # this looping through every email in emails and putting it into a list
+            # this pprocess removes the tuples and leaves emails in list
+
+            msg = Message(f'{sub}', recipients=sendEmail)
+            msg.body = f'{content}\n\n'
+
+            with server.open_resource('aurouslogo.jpg') as logo:
+                msg.attach('aurouslogo.jpg', 'image/jpeg', logo.read())
+
+            mail.send(msg)
+            flash('Your email has been sent!')
+            return render_template('aurousemail.html', title=title)
+        elif request.form.get("massEmail") == 'email_lib':
+            db_emails = db_session.query(EmailLibrary.lib_mail).all()
+            emails = db_emails
+            sendEmail = []
+            for e in emails: sendEmail += e
+
+            msg = Message(f'{sub}', recipients=sendEmail)
+            msg.body = f'{content}\n\n'
+
+            with server.open_resource('aurouslogo.jpg') as logo:
+                msg.attach('aurouslogo.jpg', 'image/jpeg', logo.read())
+
+            mail.send(msg)
+            flash('Your email has been sent!')
+            return render_template('aurousemail.html', title=title)
+        else:
+            if request.form.get("massEmail") == None:
+                flash(f'You forgot to select an email source!')
+                return redirect(url_for('aurousemail'))
+
+@server.route('/email1', methods=['GET', 'POST'])
+@login_required
+def email1():
+    if request.method == 'GET':
+        return render_template('email1.html', title=title)
+    else:
+        email = request.form.get("name")
+        sub = request.form.get("sub")
+        content = request.form.get("email_content")
+
+        msg = Message(f'{sub}', recipients=[email])
+        msg.body = f'{content}\n\n'
+
+        with server.open_resource('aurouslogo.jpg') as logo:
+            msg.attach('aurouslogo.jpg', 'image/jpeg', logo.read())
+
+        mail.send(msg)
+        flash(f'Your email has been sent to {email}!')
+        return render_template('email1.html', title=title)
+
+@server.route('/emaillib', methods=['GET', 'POST'])
+@login_required
+def emaillib():
+    if request.method == 'GET':
+        return render_template('emaillib.html', title=title)
+    else:
+        name = request.form.get("name")
+        email = request.form.get("email")
+        db_entry = EmailLibrary(name, email)
+        db_session.add(db_entry)
+        db_session.commit()
+        data = db_session.query(EmailLibrary).order_by(EmailLibrary.id).all()
+        flash(f'You have stored {name}\'s email to the Aurous79® Email Library!' )
+        return render_template('emaillib.html', title=title, data=data)
+
 
 @server.route('/report', methods=['GET', 'POST'])
 @login_required
@@ -230,7 +313,6 @@ app.layout = html.Div(children=[
         This graph displays the average ranking (out of 5) for Cleanliness, Customer Service and Speed by customers.  The total amount of customers are displayed on the X axis below.
     '''),
 ])
-
 
 
 if __name__ == '__main__':

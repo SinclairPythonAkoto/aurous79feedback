@@ -1,0 +1,35 @@
+
+{% extends "adminlayout.html" %}
+
+<title>
+	{% block title %}
+	{{ title }}
+	<meta name="description" content="Send emails back to customers from Aurous79">
+	<meta name="author" content="SinclairPythonAkoto">
+	{% endblock %}
+</title>
+
+{% block content %}
+
+<h1>{{ title }} MASS EMAILS</h1>
+
+<form action="{{ url_for('aurousemail') }}" method="post">
+	<div class="card">
+		<img src="static/aurous-logo.png" alt="Aurous79Logo" style="width: 100%">
+		<label for="intro">You are sending a mass email to all your customers.<br>You can choose to send a mass email to contacts from your <strong>Feedback Form</strong> or <strong>Email Library</strong>.</strong></label>
+		<br>
+		<p>If you wish to send a <strong>single email</strong> click </p> <a href="{{ url_for('email1') }}">here!</a>
+		<label for="selectEmail">Select where you will be sending your emails from</label>
+		<select id="selectEmail" name="massEmail" required>
+			<option disabled selected value="">Select Email Source</option>
+			<option value="email_lib">Aurous79® Email Library</option>
+			<option value="feedback_lib">Feedback Form Contacts</option>
+		</select>
+		<input type="text" name="sub" placeholder="Email Subject" required>
+		<label for="emailContent">Your email</label>
+		<textarea id="emailContent" name="email_content" rows="10" cols="35" placeholder="Enter your email here..." required></textarea>
+		<button type="submit">SEND EMAIL</button>
+	</div>
+</form>
+
+{% endblock %}

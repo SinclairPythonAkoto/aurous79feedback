@@ -1,14 +1,16 @@
-{% extends "layout.html" %}
+{% extends "adminlayout.html" %}
 
 <title>
-	{{ title }}
+	{% block title %}
+	{{ title }} Admin
 	<meta name="description" content="Admin page for Aurous79; management can view feedback data and run reports for in-depth analysis.">
 	<meta name="author" content="SinclairPythonAkoto">
+	{% endblock %}
 </title>
 
 {% block content %}
 
-<h1>{{ title }}</h1>
+<h1>{{ title }} Admin</h1>
 
 <p>
 	Welcome to Aurous79 Admin!<br><br>
@@ -16,9 +18,6 @@
 </p>
 <hr>
 <br>
-<div>
-	<a href="{{ url_for('report') }}">Run report</a>
-</div>
 <br>
 <table>
 	<tr>
@@ -55,12 +54,6 @@
 	{% endfor %}
 </table>
 <br>
-<div>
-	<a href="{{ url_for('report') }}">Run report</a>
-</div>
-<br>
-<div>
-	<a href="{{ url_for('logout') }}">Logout</a>
-</div>
+
 
 {% endblock %}

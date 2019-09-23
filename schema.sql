@@ -14,3 +14,10 @@ CREATE TABLE aurous_feedback (
   email VARCHAR,
   date_stamp VARCHAR NOT NULL
   );
+
+DROP TABLE if exists email_library;
+CREATE TABLE email_library (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR,
+  email VARCHAR
+  )
