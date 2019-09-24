@@ -16,9 +16,9 @@ server.config.update(dict(
     MAIL_PORT = 587,
     MAIL_USE_TLS = True,
     MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'sinclair.python@gmail.com',
-    MAIL_PASSWORD = 'Shalieka2017',
-    MAIL_DEFAULT_SENDER = ('Aurous 79®', 'sinclair.python@gmail.com'), #('NAME OR TITLE OF SENDER', 'SENDER EMAIL ADDRESS')
+    MAIL_USERNAME = 'your_email',
+    MAIL_PASSWORD = 'email_password',
+    MAIL_DEFAULT_SENDER = ('Aurous 79®', 'your_email'), #('NAME OR TITLE OF SENDER', 'SENDER EMAIL ADDRESS')
     MAIL_MAX_EMAILS = 5
 ))
 
