@@ -21,7 +21,7 @@ pip install -e .
 
 Run the Flask app:
 ```
-python3 aurous79/app.py
+flask --app aurous79/app.py run
 ```
 
 # Formatting
