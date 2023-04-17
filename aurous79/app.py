@@ -54,11 +54,11 @@ def feedback():
     # add to db if email is valid
     validate_customer_email: bool = validate_email(customer_email, confirm_email)
     if validate_customer_email is True:
-        print("Email is valid")
-        # session: SessionLocal = SessionLocal()
-        # new_feedback: FeedbackForm = FeedbackForm(name, age, sex, first_visit, return_visit, cleanliness, customer_service, service_speed, food_quality, shisha, comment, customer_email, feedback_date)
-        # session.add(new_feedback)
-        # session.commit()
+        # print("Email is valid")
+        session: SessionLocal = SessionLocal()
+        new_feedback: FeedbackForm = FeedbackForm(name, age, sex, first_visit, return_visit, cleanliness, customer_service, service_speed, food_quality, shisha, comment, customer_email, feedback_date)
+        session.add(new_feedback)
+        session.commit()
 
         # send email to customer
     else:
