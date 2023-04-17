@@ -8,12 +8,13 @@ class FeedbackForm(Base):
     name = Column("name", String(20), nullable=False)
     age = Column("age", Integer, nullable=False)
     sex = Column("sex", String(6), nullable=False)
-    first_visit = Column("first_visit", Integer, nullable=False)  # 1 or 0
-    return_visit = Column("return_visit", Integer, nullable=False)  # 1 or 0
+    first_visit = Column("first_visit", String(3), nullable=False)
+    return_visit = Column("return_visit", String(3), nullable=False)
     clean = Column("cleaniness", Integer, nullable=False)
     service = Column("customer_service", Integer, nullable=False)
     speed = Column("speed", Integer, nullable=False)
-    shisha = Column("shisha", Integer, nullable=False)  # 1 or 0
+    food_quality = Column("food_quality", Integer, nullable=False)
+    shisha = Column("shisha", String(3), nullable=False)
     comment = Column(
         "comment", Text, nullable=True
     )  # the only entry that can be left empty
@@ -22,18 +23,19 @@ class FeedbackForm(Base):
 
     def __init__(
         self,
-        name,
-        age,
-        sex,
-        first_visit,
-        return_visit,
-        clean,
-        service,
-        speed,
-        shisha,
-        comment,
-        email,
-        timestamp,
+        name: str,
+        age: int,
+        sex: str,
+        first_visit: str,
+        return_visit: str,
+        clean: int,
+        service: int,
+        speed: int,
+        food_quality: int,
+        shisha: str,
+        comment: str,
+        email: str,
+        timestamp: DateTime,
     ):
         self.name = name
         self.age = age
@@ -43,6 +45,7 @@ class FeedbackForm(Base):
         self.clean = clean
         self.service = service
         self.speed = speed
+        self.food_quality = food_quality
         self.shisha = shisha
         self.comment = comment
         self.email = email
@@ -55,6 +58,6 @@ class EmailLibrary(Base):
     customer_name = Column("name", String(30))
     customer_email = Column("email", String(50))
 
-    def __init__(self, customer_name, customer_email):
+    def __init__(self, customer_name: str, customer_email: str):
         self.customer_name = customer_name
         self.customer_email = customer_email

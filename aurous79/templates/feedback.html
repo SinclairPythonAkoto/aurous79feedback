@@ -95,6 +95,12 @@ input[type=submit]:hover {
 
 <h1>{{ title }} Feedback</h1>
 
+{% if error_message %}
+<div class="card">
+	<p style="color: red;">{{ error_message }}</p>
+</div>
+{% endif %}
+
 <form action="{{ url_for('feedback') }}" method="post">
 	<div class="card">
 		<img src="static/aurous-logo.png" alt="Aurous79Logo" style="width: 100%">
@@ -109,13 +115,13 @@ input[type=submit]:hover {
 			<option value="female">Female</option>
 		</select>
 		<label for="fvisit">Is this your first visit?</label>
-		<select id="fvisit" name="firstVisit" required>
+		<select id="fvisit" name="first_visit" required>
 			<option disabled selected value>Please Selelct</option>
 			<option value="yes">Yes</option>
 			<option value="no">No</option>
 		</select>
 		<label for="returnVisitors">Will we be seeing you again?</label>
-		<select id="returnVisitors" name="return_v" required>
+		<select id="returnVisitors" name="return_visit" required>
 			<option disabled selected value="">Please Select</option>
 			<option value="yes">Yes</option>
 			<option value="no">No</option>
@@ -130,7 +136,7 @@ input[type=submit]:hover {
 			<option value="1">Very dirty</option>
 		</select>
 		<label for="customers">Customer Service</label>
-		<select id="customers" name="customerService" required>
+		<select id="customers" name="customer_service" required>
 			<option disabled selected value="">Please Select</option>
 			<option value="5">Excellent</option>
 			<option value="4">Impressive</option>
@@ -147,6 +153,15 @@ input[type=submit]:hover {
 			<option value="2">Slow</option>
 			<option value="1">Too Slow</option>
 		</select>
+		<label for="foodQuality">Food Quality</label>
+		<select id="foodQuality" name="food_quality" required>
+			<option disabled selected value="">Please Select</option>
+			<option value="5">Excellent</option>
+			<option value="4">Impressive</option>
+			<option value="3">Good</option>
+			<option value="2">Bad</option>
+			<option value="1">Terrible</option>
+		</select>
 		<label for="tryShisha">Did you try our shisha?</label>
 		<select id="tryShisha" name="shisha" required>
 			<option disabled selected value="">Please Select</option>
@@ -156,8 +171,8 @@ input[type=submit]:hover {
 		<label for="textBox">Leave a comment / review!</label>
 		<textarea id="textBox" rows="3" name="comment" placeholder="Write your comment / feedback here.."></textarea><br>
 		<label><strong>Enter your email to gain a daiscount on your next bill!</strong></label>
-		<input type="text" name="email" placeholder="Your Email" required>
-		<input type="text" name="confirmEmail" placeholder="Confirm Email" required>
+		<input type="text" name="customer_email" placeholder="Your Email" required>
+		<input type="text" name="confirm_email" placeholder="Confirm Email" required>
 		<button>Submit</button>
 	</div>
 </form>
