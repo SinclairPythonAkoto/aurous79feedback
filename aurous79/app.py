@@ -18,7 +18,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 @app.route("/")
 def home():
-    return render_template("feedback.html")
+    return render_template("admin.html")
 
 @app.route("/feedback")
 def feedback():
@@ -28,9 +28,29 @@ def feedback():
 def admin():
     return "admin login page"
 
-@app.route('/login')
+@app.route("/login")
 def login():
     return "login to management page"
+
+@app.route("/logout")
+def logout():
+    return "logout of management page"
+
+@app.route("/report")
+def report():
+    return "report page"
+
+@app.route("/send-email")
+def send_single_email():
+    return "Send a single email"
+
+@app.route("/mass-emails")
+def send_mass_emails():
+    return "Send mass emails"
+
+@app.route("/email-library")
+def email_library():
+    return "Email library"
 
 
 if __name__ == "__main__":

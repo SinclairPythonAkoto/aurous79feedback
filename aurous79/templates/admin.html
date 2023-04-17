@@ -1,0 +1,59 @@
+{% extends "adminlayout.html" %}
+
+<title>
+	{% block title %}
+	{{ title }} Admin
+	<meta name="description" content="Admin page for Aurous79; management can view feedback data and run reports for in-depth analysis.">
+	<meta name="author" content="SinclairPythonAkoto">
+	{% endblock %}
+</title>
+
+{% block content %}
+
+<h1>{{ title }} Admin</h1>
+
+<p>
+	Welcome to Aurous79 Admin!<br><br>
+	Here we have results of the feedback form for you to view.  You can also run a report for further analysis.
+</p>
+<hr>
+<br>
+<br>
+<table>
+	<tr>
+		<th>ID</th>
+		<th>NAME</th>
+		<th>AGE</th>
+		<th>GENDER</th>
+		<th>NEW VISITOR</th>
+		<th>RETURN</th>
+		<th>CLEANLINESS</th>
+		<th>SERVICE</th>
+		<th>SPEED</th>
+		<th>SHISHA</th>
+		<th>COMMENTS</th>
+		<th>EMAIL</th>
+		<th>DATE & TIME</th>
+	</tr>
+	{% for d in data %}
+	<tr>
+		<td>{{ d.id }}</td>
+		<td>{{ d.name }}</td>
+		<td>{{ d.age }}</td>
+		<td>{{ d.sex }}</td>
+		<td>{{ d.f_visit }}</td>
+		<td>{{ d.comeback }}</td>
+		<td>{{ d.clean }}</td>
+		<td>{{ d.service }}</td>
+		<td>{{ d.speed }}</td>
+		<td>{{ d.shisha }}</td>
+		<td>{{ d.comment }}</td>
+		<td>{{ d.email }}</td>
+		<td>{{ d.dateStamp }}</td>
+	</tr>
+	{% endfor %}
+</table>
+<br>
+
+
+{% endblock %}
