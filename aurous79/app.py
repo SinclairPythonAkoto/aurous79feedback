@@ -35,6 +35,7 @@ def home():
         message: str = "The feedback board is empty."
         return render_template("home.html", message=message, title=title)
     else:
+        feedback: List[FeedbackForm] = session.query(FeedbackForm).all()
         return render_template("home.html", feedback=feedback, title=title)
 
 
