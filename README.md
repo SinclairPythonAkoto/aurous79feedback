@@ -11,7 +11,7 @@ directly to the customers (either on mass or individually).
 ## Installation
 Installation requirements:
 ```
-pip install Flask Flask-Mail dash SQLAlchemy datetime python-dotenv black
+pip install Flask flask_mail dash SQLAlchemy datetime python-dotenv black
 ```
 
 Install app from the command line:

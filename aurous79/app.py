@@ -1,9 +1,10 @@
 import os
-from aurous79 import app  # import Flask app from init file
+from aurous79 import app, init_mail
 from typing import List, Dict
 from flask import render_template, url_for, request, redirect, flash, session
 from functools import wraps
 from datetime import datetime
+from flask_mail import Message
 from time import strftime
 from aurous79.extension import init_db, SessionLocal
 from aurous79.models import FeedbackForm, EmailLibrary
@@ -14,11 +15,16 @@ load_dotenv()
 
 init_db()
 
-# create your db
+
+# config your db
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["AUROUS79_DB"]
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 title = os.environ["AUROUS79_TITLE"]
+
+
+# Flask-Mail config
+mail = init_mail(app)
 
 
 @app.route("/")
