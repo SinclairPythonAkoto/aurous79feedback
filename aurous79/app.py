@@ -18,7 +18,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 @app.route("/")
 def home():
-    return render_template("mass_emails.html")
+    return render_template("single_email.html")
 
 @app.route("/feedback")
 def feedback():
