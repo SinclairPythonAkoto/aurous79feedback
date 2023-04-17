@@ -16,20 +16,25 @@
 		<p>
             How was your experience at Aurous79 today? You can complete our 
             <strong>
-                <a href="{{ url_for('feedback') }}">feedback</a>
+                <a href="{{ url_for('feedback') }}" style="color: #f9d709;">feedback</a>
             </strong> form to recieve a discount off from yiour next bill!
         </p>
 	</div>
 	<br>
 	<div class="">
 		<p>
-            Click here to fill in the <a href="{{ url_for('feedback') }}">Feedback Form.</a>
+            Click here to fill in the <a href="{{ url_for('feedback') }}" style="color: #f9d709;">Feedback Form.</a>
         </p>
 		<br>
 		<p>
-            Click here to login as <a href="{{ url_for('admin') }}">Management.</a>
+            Click here to login as <a href="{{ url_for('admin') }}" style="color: #f9d709;">Management.</a>
         </p>
 	</div>
+	{% if message %}
+		<p style="color: red;">
+			{{ message }}
+		</p>
+	{% endif %}
 	<hr>
 </div>
 <div>
@@ -40,12 +45,12 @@
 			<th>GUEST COMMENTS</th>
 			<th>DATE & TIME</th>
 		</tr>
-		{% for d in data %}
+		{% for data in feedback %}
 		<tr>
-			<th>{{ d.id }}</th>
-			<td>{{ d.name }}</td>
-			<td>{{ d.comment }}</td>
-			<td>{{ d.dateStamp }}</td>
+			<th>{{ data.id }}</th>
+			<td>{{ data.name }}</td>
+			<td>{{ data.comment }}</td>
+			<td>{{ data.dateStamp }}</td>
 		</tr>
 		{% endfor %}
 	</table>

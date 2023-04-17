@@ -15,10 +15,18 @@ init_db()
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["AUROUS79_DB"]
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+title = os.environ["AUROUS79_TITLE"]
+
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    session: SessionLocal = SessionLocal()
+    feedback: List[FeedbackForm] = session.query(FeedbackForm).first()
+    if feedback is None:
+        message: str = "The feedback board is empty."
+        return render_template("home.html", message=message, title=title)
+    else:
+        return render_template("home.html", feedback=feedback ,title=title)
 
 @app.route("/feedback")
 def feedback():
