@@ -1,0 +1,257 @@
+{% extends "adminlayout.html" %}
+
+<title>
+	{% block title %}
+	{{ title }}
+	<meta name="description" content="Aurous79 Admin Report page.  Management can login to run reports on their customer base.">
+	<meta name="author" content="SinclairPythonAkoto">
+	{% endblock %}
+</title>
+
+{% block content %}
+
+<h1>{{ title }}</h1>
+
+<form action="{{ url_for('report') }}" method="post">
+	<div>
+		<table>
+			<tr>
+				<th>RUN REPORT</th>
+			</tr>
+			<tr>
+				<th>
+					<select name="run_rpt">
+						<option disabled selected value="">Select Report</option>
+						<option value="male">Males</option>
+						<option value="female">Females</option>
+						<option value="n_visit">New Visitors</option>
+						<option value="r_visit">Returning Customers</option>
+						<option value="shisha">Tried Shisha</option>
+						<option value="clean">Cleanliness</option>
+						<option value="service">Customer Service</option>
+						<option value="speed">Speed</option>
+					</select>
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<button type="submit">SUBMIT REPORT</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<br>
+	<hr>
+	<br>
+	<div>
+		<table>
+			{% if male_rpt %}
+			<h2>Male Feedback</h2>
+			<p>This is a report of all the males that completed the Aurous79 feedback form.</p>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>AGE</th>
+					<th>COMMENTS</th>
+					<th>EMAIL</th>
+					<th>DATE & TIME</th>
+				</tr>
+				{% for m in male_rpt %}
+				<tr>
+					<td>{{ m.id }}</td>
+					<td>{{ m.name }}</td>
+					<td>{{ m.age }}</td>
+					<td>{{ m.comment }}</td>
+					<td>{{ m.email }}</td>
+					<td>{{ m.dateStamp }}</td>
+				</tr>
+				{% endfor %}
+			{% endif %}
+
+			{% if female_rpt %}
+			<h2>Female Feedback</h2>
+			<p>This is a report of all the females that completed the Aurous79 feedback form.</p>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>AGE</th>
+					<th>COMMENTS</th>
+					<th>EMAIL</th>
+					<th>DATE & TIME</th>
+				</tr>
+				{% for f in female_rpt %}
+				<tr>
+					<td>{{ f.id }}</td>
+					<td>{{ f.name }}</td>
+					<td>{{ f.age }}</td>
+					<td>{{ f.comment }}</td>
+					<td>{{ f.email }}</td>
+					<td>{{ f.dateStamp }}</td>
+				</tr>
+				{% endfor %}
+			{% endif %}
+
+			{% if new_visit_rpt %}
+			<h2>New Visitors</h2>
+			<p>These customers are new visitors, why don't you send them a promotional discount/email in order to intice them to come back to Aurous79!</p>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>AGE</th>
+					<th>SEX</th>
+					<th>COMMENTS</th>
+					<th>EMAIL</th>
+					<th>DATE & TIME</th>
+				</tr>
+				{% for nv in new_visit_rpt %}
+				<tr>
+					<td>{{ nv.id }}</td>
+					<td>{{ nv.name }}</td>
+					<td>{{ nv.age }}</td>
+					<td>{{ nv.sex }}</td>
+					<td>{{ nv.comment }}</td>
+					<td>{{ nv.email }}</td>
+					<td>{{ nv.dateStamp }}</td>
+				</tr>
+				{% endfor %}
+			{% endif %}
+
+			{% if return_visit_rpt %}
+			<h2>Returning Customers</h2>
+			<p>These customers have stated they would like to return, why don't you offer them a promational discount in order to bring them back to Aurous79!</p>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>AGE</th>
+					<th>SEX</th>
+					<th>COMMENTS</th>
+					<th>EMAIL</th>
+					<th>DATE & TIME</th>
+				</tr>
+				{% for rv in return_visit_rpt %}
+				<tr>
+					<td>{{ rv.id }}</td>
+					<td>{{ rv.name }}</td>
+					<td>{{ rv.age }}</td>
+					<td>{{ rv.sex }}</td>
+					<td>{{ rv.comment }}</td>
+					<td>{{ rv.email }}</td>
+					<td>{{ rv.dateStamp }}</td>
+				</tr>
+				{% endfor %}
+			{% endif %}
+
+			{% if shisha_rpt %}
+			<h2>Shisha Customers</h2>
+			<p>Why don't you send them a promotional discount/email in order for your customers to try out more of your shisha flavours?</p>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>AGE</th>
+					<th>SEX</th>
+					<th>COMMENTS</th>
+					<th>EMAIL</th>
+					<th>DATE & TIME</th>
+				</tr>
+				{% for s in shisha_rpt %}
+				<tr>
+					<td>{{ s.id }}</td>
+					<td>{{ s.name }}</td>
+					<td>{{ s.age }}</td>
+					<td>{{ s.sex }}</td>
+					<td>{{ s.comment }}</td>
+					<td>{{ s.email }}</td>
+					<td>{{ s.dateStamp }}</td>
+				</tr>
+				{% endfor %}
+			{% endif %}
+
+			{% if clean_rpt %}
+			<h2>Cleanliness</h2>
+			<p>On a scale from 1 - 5; 1 = Very Dirty, 5 = Excellent</p>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>AGE</th>
+					<th>SEX</th>
+					<th>COMMENTS</th>
+					<th>CLEANLINESS</th>
+					<th>EMAIL</th>
+					<th>DATE & TIME</th>
+				</tr>
+				{% for c in clean_rpt %}
+				<tr>
+					<td>{{ c.id }}</td>
+					<td>{{ c.name }}</td>
+					<td>{{ c.age }}</td>
+					<td>{{ c.sex }}</td>
+					<td>{{ c.clean }}</td>
+					<td>{{ c.comment }}</td>
+					<td>{{ c.email }}</td>
+					<td>{{ c.dateStamp }}</td>
+				</tr>
+				{% endfor %}
+			{% endif %}
+
+			{% if service_rpt %}
+			<h2>Customer Service</h2>
+			<p>On a scale from 1 - 5; 1 = Terrible, 5 = Excellent</p>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>AGE</th>
+					<th>SEX</th>
+					<th>SERVICE</th>
+					<th>COMMENTS</th>
+					<th>EMAIL</th>
+					<th>DATE & TIME</th>
+				</tr>
+				{% for s in service_rpt %}
+				<tr>
+					<td>{{ s.id }}</td>
+					<td>{{ s.name }}</td>
+					<td>{{ s.age }}</td>
+					<td>{{ s.sex }}</td>
+					<td>{{ s.service }}</td>
+					<td>{{ s.comment }}</td>
+					<td>{{ s.email }}</td>
+					<td>{{ s.dateStamp }}</td>
+				</tr>
+				{% endfor %}
+			{% endif %}
+
+			{% if speed_rpt %}
+			<h2>Speed of Service</h2>
+			<p>On a scale from 1 - 5; 1 = Too Slow, 5 = Excellent</p>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>AGE</th>
+					<th>SEX</th>
+					<th>SPEED</th>
+					<th>COMMENTS</th>
+					<th>EMAIL</th>
+					<th>DATE & TIME</th>
+				</tr>
+				{% for s in speed_rpt %}
+				<tr>
+					<td>{{ s.id }}</td>
+					<td>{{ s.name }}</td>
+					<td>{{ s.age }}</td>
+					<td>{{ s.sex }}</td>
+					<td>{{ s.speed }}</td>
+					<td>{{ s.comment }}</td>
+					<td>{{ s.email }}</td>
+					<td>{{ s.dateStamp }}</td>
+				</tr>
+				{% endfor %}
+			{% endif %}
+
+		</table>
+	</div>
+	<br>
+	<br>
+	<a href="/dash/">Graph Analysis</a>
+</form>
+
+{% endblock %}
