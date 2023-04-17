@@ -18,7 +18,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return render_template("login.html")
 
 @app.route("/feedback")
 def feedback():
@@ -27,6 +27,10 @@ def feedback():
 @app.route("/admin")
 def admin():
     return "admin login page"
+
+@app.route('/login')
+def login():
+    return "login to management page"
 
 
 if __name__ == "__main__":

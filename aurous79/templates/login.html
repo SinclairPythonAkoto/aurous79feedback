@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+<title>
+	{% block title %}
+	{{ title }}
+	<meta name="description" content="Login into Aurous79 admin page for their feedback form.">
+	<meta name="author" content="SinclairPythonAkoto">
+	{% endblock %}
+</title>
+
+{% block content %}
+
+<style>
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	max-width: 300px;
+	margin: auto;
+	text-align: center;
+	font-family: arial;
+}
+
+button {
+	border: none;
+	outline: 0;
+	display: inline-block;
+	padding: 8px;
+	color: white;
+	background-color: #f9d709;
+	text-align: center;
+	cursor: pointer;
+	width: 100%;
+	font-size: 18px;
+}
+
+a {
+text-decoration: none;
+font-size: 22px;
+color: black;
+}
+
+textarea {
+	max-width: 100%;
+}
+
+button:hover, a:hover {
+	opacity: 0.7;
+}
+
+input[type=text], select, textarea {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	margin-top: 6px;
+	margin-bottom: 16px;
+	resize: vertical;
+}
+
+input[type=password], select, textarea {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	margin-top: 6px;
+	margin-bottom: 16px;
+	resize: vertical;
+}
+
+input[type=submit] {
+	background-color: #4CAF50;
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+input[type=submit]:hover {
+	background-color: #45a049;
+}
+
+
+</style>
+
+<h1 style="text-align: center;">{{ title }}</h1>
+
+<p style="text-align: center;">Enter your username and password to login as Aurous79 Management.</p>
+
+<form action="{{ url_for('login') }}" method="post">
+	<div class="card">
+		<img src="static/aurous-logo.png" alt="Aurous79Logo" style="width: 100%"><br>
+		<input type="text" name="username" placeholder="Username" required>
+		<input type="password" name="password" placeholder="Password" required>
+		<button type="submit">LOGIN</button>
+	</div>
+</form>
+
+
+{% endblock %}
