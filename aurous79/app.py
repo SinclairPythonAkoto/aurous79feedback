@@ -8,7 +8,13 @@ from flask_mail import Message
 from time import strftime
 from aurous79.extension import init_db, SessionLocal
 from aurous79.models import FeedbackForm, EmailLibrary
-from aurous79.utils.validate_email import validate_email
+from aurous79.utils.validate_email import validate_email, duplicate_email
+from aurous79.utils.create_feedback import create_feedback
+from aurous79.utils.validate_age import minimum_age, validate_age
+from aurous79.utils.create_email import (
+    create_5P_discount_email,
+    create_10P_discount_email,
+)
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -59,18 +65,24 @@ def feedback():
     comment = request.form["comment"]
     customer_email = request.form["customer_email"]
     confirm_email = request.form["confirm_email"]
-    feedback_date = datetime.now()
-    email_timestamp = datetime.now().strftime("%H:%M")
-    email_datestamp = datetime.now().strftime("%d/%m/%Y")
+
+    # check if age is < 16 - if so, redirect to home
+    verify_age: bool = minimum_age(int(age))
+    if verify_age is False:
+        message = "You must be 16 or older to complete this form."
+        return render_template("home.html", message=message, title=title)
+
+    # 1. check if age is less than 16
+    # 2. check if age is between 16 and 18
+    # 3. check if the email is valid
+    # 4. check if the email is a duplicate
 
     # add to db if email is valid
     validate_customer_email: bool = validate_email(customer_email, confirm_email)
+
     if validate_customer_email is True:
-        # print("Email is valid")
-        session: SessionLocal = SessionLocal()
-        new_feedback: FeedbackForm = FeedbackForm(
+        new_feedback: FeedbackForm = create_feedback(
             name,
-            age,
             sex,
             first_visit,
             return_visit,
@@ -80,29 +92,10 @@ def feedback():
             food_quality,
             shisha,
             comment,
-            customer_email,
-            feedback_date,
-        )
-        session.add(new_feedback)
-        session.commit()
-        print(app.root_path)
-
-        # send email to customer
-
-        # set up email message        
-        email_message = Message("My Aurous79® Discount!", recipients=[customer_email])
-        email_message.body = (
-            f"Thank you {name} for completing our feedback form! You have earned 5" \
-            " off from your bill.\n\nTo gain your discount please show this email to the cashier." \
-            f"\n\nPlease note that this expires 24hrs after {email_timestamp}, {email_datestamp}.\n\n\n"
+            email=customer_email,
         )
 
-        # attach image to email
-        with app.open_resource("aurouslogo.jpg") as logo:
-            email_message.attach("aurouslogo.jpg", "image/jpeg", logo.read())
-        
-        # send email
-        mail.send(email_message)
+        send_email = create_5P_discount_email(name, customer_email)
 
         flash(f"Thank you {name} for your feedback!")
         return redirect(url_for("home")), 201
@@ -115,6 +108,7 @@ def feedback():
             render_template("feedback.html", error_message=error_message, title=title),
             400,
         )
+
 
 @app.route("/admin")
 def admin():
