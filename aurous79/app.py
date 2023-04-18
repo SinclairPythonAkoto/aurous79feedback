@@ -57,17 +57,52 @@ def feedback():
     customer_email = request.form["customer_email"]
     confirm_email = request.form["confirm_email"]
     feedback_date = datetime.now()
+    email_timestamp = datetime.now().strftime("%H:%M")
+    email_datestamp = datetime.now().strftime("%d/%m/%Y")
 
     # add to db if email is valid
     validate_customer_email: bool = validate_email(customer_email, confirm_email)
     if validate_customer_email is True:
         # print("Email is valid")
         session: SessionLocal = SessionLocal()
-        new_feedback: FeedbackForm = FeedbackForm(name, age, sex, first_visit, return_visit, cleanliness, customer_service, service_speed, food_quality, shisha, comment, customer_email, feedback_date)
+        new_feedback: FeedbackForm = FeedbackForm(
+            name,
+            age,
+            sex,
+            first_visit,
+            return_visit,
+            cleanliness,
+            customer_service,
+            service_speed,
+            food_quality,
+            shisha,
+            comment,
+            customer_email,
+            feedback_date,
+        )
         session.add(new_feedback)
         session.commit()
+        print(app.root_path)
 
         # send email to customer
+
+        # set up email message        
+        email_message = Message("My Aurous79® Discount!", recipients=[customer_email])
+        email_message.body = (
+            f"Thank you {name} for completing our feedback form! You have earned 5" \
+            " off from your bill.\n\nTo gain your discount please show this email to the cashier." \
+            "\n\nPlease note that this expires 24hrs after {email_timestamp}, {email_datestamp}.\n\n\n"
+        )
+
+        # attach image to email
+        with app.open_resource("aurouslogo.jpg") as logo:
+            email_message.attach("aurouslogo.jpg", "image/jpeg", logo.read())
+        
+        # send email
+        mail.send(email_message)
+
+        flash(f"Thank you {name} for your feedback!")
+        return redirect(url_for("home")), 201
     else:
         error_message = (
             "Emails do not match. Please try again to recieve your discount."
@@ -77,8 +112,6 @@ def feedback():
             render_template("feedback.html", error_message=error_message, title=title),
             400,
         )
-    return render_template("feedback.html")
-
 
 @app.route("/admin")
 def admin():

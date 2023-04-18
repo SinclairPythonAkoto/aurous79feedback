@@ -34,3 +34,17 @@ black aurous79/extension.py
 # format multiple files in a directory
 black aurous79/
 ```
+
+# Setting up Flask-Mail
+The implementation has changed since the last time I used this library 4x years ago.
+Before we just needed to add our Gmail email and password to the app and then turn
+on the less secure app option in your Gmail Account.  Now the process is slightly different
+becuase the secure app option no longer exists.  Because I have the 2-step verification 
+on my Gmail account, I need to naviagate to **App Passwords** in my Gmail and then create a new 
+password *(this can only be done if you have already set up your 2-step verification; if not you will have to do it first)*.
+
+Once you set up the name of the app and the type of computer where it's being accessed from, Gmail 
+will then generate a password for you which you can then use in your code.
+
+For I have put this in my envirnment variables file `.env` and made sure this is on my `.gitignore` file so my information is 
+protected.  ***It is Highly reccomended to adhere to this practice in order to keep your persoanl information safe.***
