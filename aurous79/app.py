@@ -26,6 +26,9 @@ title = os.environ["AUROUS79_TITLE"]
 # Flask-Mail config
 mail = init_mail(app)
 
+# secret key for session
+app.secret_key = os.environ["AUROUS79_SECRET_KEY"]
+
 
 @app.route("/")
 def home():
@@ -91,7 +94,7 @@ def feedback():
         email_message.body = (
             f"Thank you {name} for completing our feedback form! You have earned 5" \
             " off from your bill.\n\nTo gain your discount please show this email to the cashier." \
-            "\n\nPlease note that this expires 24hrs after {email_timestamp}, {email_datestamp}.\n\n\n"
+            f"\n\nPlease note that this expires 24hrs after {email_timestamp}, {email_datestamp}.\n\n\n"
         )
 
         # attach image to email
