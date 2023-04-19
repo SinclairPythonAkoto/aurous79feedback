@@ -38,5 +38,4 @@ def create_feedback(
         )
         session.add(new_feedback)
         session.commit()
-        session.close()
     return new_feedback

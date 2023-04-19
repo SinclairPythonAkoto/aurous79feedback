@@ -13,7 +13,7 @@ def validate_email(email: str, confirmation: str) -> bool:
         return False
 
 
-def duplicate_email(email: str) -> bool:
+def find_email(email: str) -> bool:
     """Check if the email already exists in the database"""
     with app.app_context():
         session: SessionLocal = SessionLocal()
