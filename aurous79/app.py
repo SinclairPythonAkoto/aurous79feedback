@@ -25,10 +25,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 title = os.environ["AUROUS79_TITLE"]
 
-
-# Flask-Mail config
-mail = init_mail(app)
-
 # secret key for session
 app.secret_key = os.environ["AUROUS79_SECRET_KEY"]
 
