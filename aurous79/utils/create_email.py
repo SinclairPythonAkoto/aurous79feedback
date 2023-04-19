@@ -13,8 +13,8 @@ def send_email(name: str, email: str, discount: str) -> None:
     # set up email message
     email_message = Message(f"Aurous79® {discount} Discount!", recipients=[email])
     email_message.body = (
-        f"Thank you {name} for completing our feedback form! You have earned {discount}" \
-        " off from your next bill.\n\nTo gain your discount please show this email to the cashier." \
+        f"Thank you {name} for completing our feedback form! You have earned {discount}"
+        " off from your next bill.\n\nTo gain your discount please show this email to the cashier."
         f"\n\nPlease note that this expires 24hrs after {email_timestamp}, {email_datestamp}.\n\n\n"
     )
 

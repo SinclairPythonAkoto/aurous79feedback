@@ -91,12 +91,16 @@ def feedback():
                     customer_email,
                 )
                 discount: str = "5%"
-                send_customer_email: Message = send_email(name, customer_email, discount)
+                send_customer_email: Message = send_email(
+                    name, customer_email, discount
+                )
                 flash(f"Thank you {name} for your feedback!")
                 return redirect(url_for("home")), 201
             else:
                 # if email does not exist, add feedback to db with 10% email
-                validate_customer_email: bool = validate_email(customer_email, confirm_email)
+                validate_customer_email: bool = validate_email(
+                    customer_email, confirm_email
+                )
                 if validate_customer_email is True:
                     new_feedback: FeedbackForm = create_feedback(
                         name,
@@ -113,15 +117,24 @@ def feedback():
                         customer_email,
                     )
                     discount: str = "10%"
-                    send_customer_email: Message = send_email(name, customer_email, discount)
+                    send_customer_email: Message = send_email(
+                        name, customer_email, discount
+                    )
                     flash(f"Thank you {name} for your feedback!")
                     return redirect(url_for("home")), 201
                 # if invalid emails, return error message
                 error_message: str = "The email you entered does not match. Please try again to recieve your discount."
-                return render_template("feedback.html", error_message=error_message, title=title), 400
+                return (
+                    render_template(
+                        "feedback.html", error_message=error_message, title=title
+                    ),
+                    400,
+                )
         else:
             # if customer is under 18, send 5% email
-            validate_customer_email: bool = validate_email(customer_email, confirm_email)
+            validate_customer_email: bool = validate_email(
+                customer_email, confirm_email
+            )
             if validate_customer_email is True:
                 new_feedback: FeedbackForm = create_feedback(
                     name,
@@ -138,12 +151,20 @@ def feedback():
                     customer_email,
                 )
                 discount = "5%"
-                send_customer_email: Message = send_email(name, customer_email, discount)
+                send_customer_email: Message = send_email(
+                    name, customer_email, discount
+                )
                 flash(f"Thank you {name} for your feedback!")
                 return redirect(url_for("home")), 201
             # if invalid emails, return error message
             error_message: str = "The email you entered does not match. Please try again to recieve your discount."
-            return render_template("feedback.html", error_message=error_message, title=title), 400
+            return (
+                render_template(
+                    "feedback.html", error_message=error_message, title=title
+                ),
+                400,
+            )
+
 
 @app.route("/admin")
 def admin():
