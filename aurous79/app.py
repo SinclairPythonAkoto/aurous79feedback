@@ -196,11 +196,21 @@ def login():
 @app.route("/admin")
 @login_required
 def admin():
-    return render_template("admin.html")
+    session: SessionLocal = SessionLocal()
+    feedback: List[FeedbackForm] = session.query(FeedbackForm).first()
+    if feedback is None:
+        message: str = "The feedback board is empty."
+        return render_template("admin.html", message=message, title=title)
+    else:
+        data: List[FeedbackForm] = session.query(FeedbackForm).all()
+        return render_template("admin.html", data=data, title=title)
 
 
 @app.route("/logout")
+@login_required
 def logout():
+    session.pop("logged_in", None)
+    flash("See you soon!")
     return redirect(url_for("home"))
 
 
