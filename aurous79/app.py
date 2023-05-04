@@ -163,13 +163,26 @@ def feedback():
             )
 
 
-@app.route("/admin")
-def admin():
-    return render_template("admin.html")
-
-
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    error = None
+    admin = request.form["username"]
+    admin_password = request.form["password"]
+    if request.method == "GET":
+        return render_template("login.html", title=title)
+    else:
+        if admin == os.getenv("ADMIN_USERNAME") and admin_password == os.getenv("ADMIN_PASSWORD"):
+            session['logged_in'] = True
+            flash("Welcome back to Aurous79!")
+            return redirect(url_for("admin"))
+        else:
+            error = "Invalid username and/or password.  You must be management of Aurous79 to login."
+            return render_template("login.html", error=error, title=title)
+
+@login_required
+@app.route("/admin")
+# @login_required
+def admin():
     return render_template("login.html")
 
 
