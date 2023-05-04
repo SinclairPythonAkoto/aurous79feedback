@@ -12,6 +12,7 @@ from aurous79.utils.validate_email import validate_email, find_email
 from aurous79.utils.create_feedback import create_feedback
 from aurous79.utils.validate_age import minimum_age, check_age
 from aurous79.utils.create_email import send_email
+from aurous79.utils.login_required import login_required
 from dotenv import load_dotenv
 
 load_dotenv()
