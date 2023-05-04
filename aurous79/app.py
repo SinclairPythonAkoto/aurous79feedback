@@ -12,7 +12,7 @@ from aurous79.utils.validate_email import validate_email, find_email
 from aurous79.utils.create_feedback import create_feedback
 from aurous79.utils.validate_age import minimum_age, check_age
 from aurous79.utils.create_email import send_email
-from aurous79.utils.login_required import login_required
+# from aurous79.utils.login_required import login_required
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -28,6 +28,20 @@ title = os.environ["AUROUS79_TITLE"]
 
 # secret key for session
 app.secret_key = os.environ["AUROUS79_SECRET_KEY"]
+
+
+from functools import wraps
+from flask import session, redirect, url_for
+
+def login_required(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        if session.get('logged_in') is None:
+            flash('You need to log in first')
+            return redirect(url_for('login'))
+        return func(*args, **kwargs)
+    return decorated_function
+
 
 
 @app.route("/")
@@ -166,24 +180,23 @@ def feedback():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     error = None
-    admin = request.form["username"]
-    admin_password = request.form["password"]
-    if request.method == "GET":
-        return render_template("login.html", title=title)
-    else:
+    if request.method == "POST":
+        admin = request.form["username"]
+        admin_password = request.form["password"]
         if admin == os.getenv("ADMIN_USERNAME") and admin_password == os.getenv("ADMIN_PASSWORD"):
             session['logged_in'] = True
             flash("Welcome back to Aurous79!")
             return redirect(url_for("admin"))
         else:
-            error = "Invalid username and/or password.  You must be management of Aurous79 to login."
-            return render_template("login.html", error=error, title=title)
+            error = "Invalid username and/or password. You must be management of Aurous79 to login."
+    return render_template("login.html", error=error)
 
-@login_required
+
+
 @app.route("/admin")
-# @login_required
+@login_required
 def admin():
-    return render_template("login.html")
+    return render_template("admin.html")
 
 
 @app.route("/logout")
